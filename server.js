@@ -36,7 +36,7 @@ app.get("/", async (req, res) => {
 // APIs
 
 // Port Setup
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 9000;
 
 app.listen(PORT, () => {
   const timestamp = (new Date(Date.now())).toLocaleString();
