@@ -1,0 +1,30 @@
+{
+  "name": "project_myrequest_back_end",
+  "version": "1.0.0",
+  "description": "*As a registered user, I want to create a room so I can display my requested song list. *As a registered user, I want to receive song requests from other users so I can accept or decline adding the requests to my requested song list. *As a website visitor, I want to enter in a unique pin so I can join a room hosted by another user. *As a website visitor, I want to search for songs so I can send over requests to the room host user. *As a website visitor, I want to create comments so I can interact with other users in a room.",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.2.6",
+    "nodemon": "^1.18.3",
+    "superagent": "^3.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JayEscala/project_myrequest_back_end.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JayEscala/project_myrequest_back_end/issues"
+  },
+  "homepage": "https://github.com/JayEscala/project_myrequest_back_end#readme"
+}
