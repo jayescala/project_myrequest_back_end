@@ -27,7 +27,7 @@ router.post("/register", async (req, res) => {
     }
     res.json({
       status: 200,
-      data: "registration successful"
+      data: req.session
     });
   } catch(err) {
     console.log(err);
@@ -43,16 +43,31 @@ router.post('/login', async (req, res) => {
         req.session.username = req.body.username;
         req.session.loggedIn = true;
         req.session.message = "You are already logged in.";
-        res.json({
-          status: 200,
-          data: "login successful"
-        });
       } else {
         req.session.message = "The password you have entered is incorrect.";
       }
     } else {
       req.session.message = "The username you had entered does not match any existing accounts.";
     }
+    res.json({
+      status: 200,
+      data: req.session
+    });
+  });
+});
+
+// User Logout //
+router.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if(err){
+      res.send(err, "Error destroying session");
+    } else {
+      req.session.message = "";
+    }
+    res.json({
+      status: 200,
+      data: "login successful"
+    });
   });
 });
 
