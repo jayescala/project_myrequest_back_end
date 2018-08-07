@@ -21,14 +21,14 @@ router.post("/register", async (req, res) => {
         req.session.username = userEntry.username;
         req.session.loggedIn = true;
         req.session.message = "You are already logged in.";
+        res.json({
+          status: 200,
+          data: req.session
+        });
       });
     } else {
       req.session.message = "The username you had entered is already in use.";
     }
-    res.json({
-      status: 200,
-      data: req.session
-    });
   } catch(err) {
     console.log(err);
     res.send(err);
@@ -37,6 +37,9 @@ router.post("/register", async (req, res) => {
 
 // User Login //
 router.post('/login', async (req, res) => {
+  req.session.username = "";
+  req.session.loggedIn = false;
+  req.session.message = "";
   Users.findOne({username: req.body.username}, (err, loginUsername) => {
     if(loginUsername){
       if(bcrypt.compareSync(req.body.password, loginUsername.password)){
@@ -49,10 +52,10 @@ router.post('/login', async (req, res) => {
     } else {
       req.session.message = "The username you had entered does not match any existing accounts.";
     }
-    res.json({
-      status: 200,
-      data: req.session
-    });
+  });
+  res.json({
+    status: 200,
+    data: req.session
   });
 });
 
