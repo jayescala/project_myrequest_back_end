@@ -41,7 +41,8 @@ router.post('/', async (req, res) => {
 // Find Room //
 router.get('/:id', async (req, res, next) => {
   try {
-    const foundRoom = await Rooms.findById(req.params.id);
+    console.log(req)
+    const foundRoom = await Rooms.findOne({code: req.params.id})
     res.json({
       status: 200,
       data: foundRoom
