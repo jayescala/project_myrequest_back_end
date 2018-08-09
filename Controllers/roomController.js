@@ -24,7 +24,6 @@ router.get('/', async (req, res, next) => {
 // Create Room //
 router.post('/', async (req, res) => {
   try {
-    console.log(req.body, 'this is the req.body');
     const createdRoom = await Rooms.create(req.body);
 
     res.json({
