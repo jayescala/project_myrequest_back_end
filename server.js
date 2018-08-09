@@ -38,7 +38,7 @@ const userController = require("./controllers/userController.js");
 app.use("/user", userController);
 // room
 const roomController = require("./controllers/roomController.js");
-app.use("/api/v1/rooms", roomController);
+app.use("/rooms", roomController);
 
 // Static Routes
   // images
@@ -62,6 +62,10 @@ io.on("connection", function(socket){
 
   socket.on("chat", function(data){
     io.sockets.emit("chat", data);
+  });
+
+  socket.on("typing", function(data){
+    socket.broadcast.emit("typing", data);
   });
 
   // socket.on("subscribeToTimer", (interval) => {
