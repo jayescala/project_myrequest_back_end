@@ -11,6 +11,11 @@ const request = require("request");
 // Application
 const app = express();
 
+// Hosts
+const heroku = "https://myrequest-app.herokuapp.com";
+const localhost = "http://localhost:9000";
+const activehost = heroku;
+
 // Port Setup
   // Server Port
 const PORT = process.env.PORT || 9000;
@@ -35,7 +40,7 @@ app.use(methodOverride("_method"));
 app.use(session({secret: "max", resave: false, saveUninitialized: false}));
   // cors
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: activehost,
   credentials: true,
   optionsSuccessStatus: 200
 }
