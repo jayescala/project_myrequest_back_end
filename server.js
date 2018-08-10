@@ -11,6 +11,15 @@ const request = require("request");
 // Application
 const app = express();
 
+// Port Setup
+  // Server Port
+const PORT = process.env.PORT || 9000;
+
+const server = app.listen(PORT, () => {
+  const timestamp = (new Date(Date.now())).toLocaleString();
+  console.log(timestamp + ": running on port " + PORT);
+});
+
 // mongodb Connection
 require("./db/db.js");
 
@@ -43,15 +52,6 @@ app.use("/rooms", roomController);
 // Static Routes
   // images
 app.use("/images", express.static("images"));
-
-// Port Setup
-  // Server Port
-const PORT = process.env.PORT || 9000;
-
-const server = app.listen(PORT, () => {
-  const timestamp = (new Date(Date.now())).toLocaleString();
-  console.log(timestamp + ": running on port " + PORT);
-});
 
 // APIs
   // socket.io Setup
