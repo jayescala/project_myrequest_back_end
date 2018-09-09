@@ -11,6 +11,20 @@ const request = require("request");
 // Application
 const app = express();
 
+// Hosts
+const heroku = "https://myrequest-app.herokuapp.com";
+const localhost = "http://localhost:9000";
+const activehost = heroku;
+
+// Port Setup
+  // Server Port
+const PORT = process.env.PORT || 9000;
+
+const server = app.listen(PORT, () => {
+  const timestamp = (new Date(Date.now())).toLocaleString();
+  console.log(timestamp + ": running on port " + PORT);
+});
+
 // mongodb Connection
 require("./db/db.js");
 
@@ -26,7 +40,7 @@ app.use(methodOverride("_method"));
 app.use(session({secret: "max", resave: false, saveUninitialized: false}));
   // cors
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: activehost,
   credentials: true,
   optionsSuccessStatus: 200
 }
@@ -38,20 +52,11 @@ const userController = require("./controllers/userController.js");
 app.use("/user", userController);
 // room
 const roomController = require("./controllers/roomController.js");
-app.use("/api/v1/rooms", roomController);
+app.use("/rooms", roomController);
 
 // Static Routes
   // images
 app.use("/images", express.static("images"));
-
-// Port Setup
-  // Server Port
-const PORT = process.env.PORT || 9000;
-
-const server = app.listen(PORT, () => {
-  const timestamp = (new Date(Date.now())).toLocaleString();
-  console.log(timestamp + ": running on port " + PORT);
-});
 
 // APIs
   // socket.io Setup
@@ -62,6 +67,10 @@ io.on("connection", function(socket){
 
   socket.on("chat", function(data){
     io.sockets.emit("chat", data);
+  });
+
+  socket.on("typing", function(data){
+    socket.broadcast.emit("typing", data);
   });
 
   // socket.on("subscribeToTimer", (interval) => {

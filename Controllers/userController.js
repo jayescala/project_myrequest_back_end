@@ -4,7 +4,7 @@ const router = express.Router();
 const Users = require('../models/users.js');
 
 
-// User Register //
+// User Register
 router.post("/register", async (req, res) => {
   try {
     const userEntry = {};
@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
     const registerUsername = await Users.findOne({username: req.body.username});
 
     if(registerUsername !== true){
-      Users.create(userEntry, (err, user) => {
+      await Users.create(userEntry, (err, user) => {
         req.session.username = userEntry.username;
         req.session.loggedIn = true;
         req.session.message = "You are already logged in.";
@@ -28,6 +28,10 @@ router.post("/register", async (req, res) => {
       });
     } else {
       req.session.message = "The username you had entered is already in use.";
+      res.json({
+        status: 200,
+        data: req.session
+      });
     }
   } catch(err) {
     console.log(err);
@@ -35,12 +39,12 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// User Login //
+// User Login
 router.post('/login', async (req, res) => {
   req.session.username = "";
   req.session.loggedIn = false;
   req.session.message = "";
-  Users.findOne({username: req.body.username}, (err, loginUsername) => {
+  await Users.findOne({username: req.body.username}, (err, loginUsername) => {
     if(loginUsername){
       if(bcrypt.compareSync(req.body.password, loginUsername.password)){
         req.session.username = req.body.username;
@@ -59,7 +63,7 @@ router.post('/login', async (req, res) => {
   });
 });
 
-// User Logout //
+// User Logout
 router.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if(err){

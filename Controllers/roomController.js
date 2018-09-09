@@ -4,7 +4,6 @@ const Rooms = require('../models/rooms.js');
 
 // Main Page Router // Index Route //
 router.get('/', async (req, res, next) => {
-  console.log(req.session, 'this is get all');
   try {
     const Room = await Rooms.find();
 
@@ -19,6 +18,29 @@ router.get('/', async (req, res, next) => {
 
   }
 
+});
+
+// Search Route
+router.get("/search", async (req, res) => {
+  try {
+    let roomCheck = false;
+    Rooms.findOne({code: req.body.roomCode}, (err, roomCode) => {
+      let message = "";
+      if(roomCode === true){
+        roomCheck = true;
+        message = "";
+      } else {
+        roomCheck = false;
+        message = "The room code you have entered is incorrect.";
+      }
+    });
+    res.json({
+      status: 200,
+      data: roomCheck
+    });
+  } catch(err) {
+    res.send(err)
+  }
 });
 
 // Create Room //
