@@ -6,13 +6,13 @@ const mongoUri = process.env.MONGODB_URI || "mongodb://localhost:27017/myrequest
 mongoose.connect(mongoUri, { useNewUrlParser: true });
 
 mongoose.connection.on("connected", () => {
-  console.log("mongoose is connected");
+  console.log("Mongoose is connected.");
 });
 
 mongoose.connection.on("error", (err) => {
-  console.log(err, " mongoose error");
+  console.log(err, ": Mongoose error.");
 });
 
 mongoose.connection.on("disconnected", () => {
-  console.log("mongoose is disconnected");
+  console.log("Mongoose is disconnected.");
 });
